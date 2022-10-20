@@ -2,7 +2,7 @@
 
 ## Authors
 
-- [Junior Yao ](https://github.com/junioryao)
+- [Junior Yao ](https://github.com/junioryao/MowerGame/tree/master)
 
 ***
 ***
