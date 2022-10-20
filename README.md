@@ -9,9 +9,9 @@
 
 # SUMMARY
 
-1. [Setup](##Setup)
-2. [Algorithm Explanation](##Algorithm Explanation)
-3. [Program UML](##Program UML)
+1. [Setup](##)
+2. [Algorithm Explanation](##)
+3. [Program UML](##)
 
 ***
 ***
