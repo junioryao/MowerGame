@@ -20,8 +20,9 @@ import static org.publicistsapient.constant.Constant.*;
  * @implSpec validate game input data and build object
  */
 public class GameLogicValidator {
-    FileProcessor fileProcessor;
     private final static Logger LOGGER = Logger.getLogger(GameLogicValidator.class.getName());
+    FileProcessor fileProcessor;
+
     public GameLogicValidator(FileProcessor fileProcessor) {
         this.fileProcessor = fileProcessor;
     }
@@ -57,7 +58,7 @@ public class GameLogicValidator {
             mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
             MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(Integer.parseInt(mowerCoordinate[0]), Integer.parseInt(mowerCoordinate[1]), mowerCoordinate[2]);
             MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
-                                           .mowerBaseInstruction(mowerInstructions).build().applyInstruction();
+                                           .mowerGameInstruction(mowerInstructions).build().applyInstruction();
             mowerGameList.add(mowerGame);
         }
         LOGGER.info("Mower game build successfully");

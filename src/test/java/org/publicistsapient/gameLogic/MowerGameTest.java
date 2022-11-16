@@ -14,7 +14,7 @@ class MowerGameTest {
         GameSurface gameSurface = new GameSurface(5, 5);
         MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(1, 2, "N");
         MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
-                                       .mowerBaseInstruction(new String[]{"G", "A", "G", "A", "G", "A", "G", "A", "A"})
+                                       .mowerGameInstruction(new String[]{"G", "A", "G", "A", "G", "A", "G", "A", "A"})
                                        .build();
         mowerGame.applyInstruction();
         assertArrayEquals(new String[]{mowerGame.getMowerBaseCoordinate().getX().toString(),
@@ -28,7 +28,7 @@ class MowerGameTest {
         GameSurface gameSurface = new GameSurface(5, 5);
         MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(3, 3, "E");
         MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
-                                       .mowerBaseInstruction(new String[]{"A", "A", "D", "A", "A", "D", "A", "D", "D",
+                                       .mowerGameInstruction(new String[]{"A", "A", "D", "A", "A", "D", "A", "D", "D",
                                            "A"}).build();
         mowerGame.applyInstruction();
         assertArrayEquals(new String[]{mowerGame.getMowerBaseCoordinate().getX().toString(),

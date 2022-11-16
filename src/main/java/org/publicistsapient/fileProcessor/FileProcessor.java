@@ -16,10 +16,9 @@ import static org.publicistsapient.constant.Constant.*;
  */
 public class FileProcessor {
 
-    private String filePath;
-    List<String> fileCollector;
-
     private final static Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
+    List<String> fileCollector;
+    private String filePath;
 
     public FileProcessor(String path) {
         this.filePath = path;

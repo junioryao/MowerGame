@@ -4,16 +4,26 @@ import lombok.Builder;
 
 import java.util.logging.Logger;
 
-import static org.publicistsapient.constant.Property.compassIndex;
-import static org.publicistsapient.constant.Property.compassMovingCoordinate;
+import static org.publicistsapient.constant.Property.*;
 
 @Builder
 public class MowerGame implements Game<MowerGame> {
-    private MowerBaseCoordinate mowerBaseCoordinate;
-    private String[] mowerBaseInstruction;
-    public GameSurface gameSurface;
-    private static final String[] compass = new String[]{"N", "E", "S", "W"};
     private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
+    public GameSurface gameSurface;
+    private MowerBaseCoordinate mowerBaseCoordinate;
+    private String[] mowerGameInstruction;
+
+    private static int moveCompassToTheRight(int position) {
+        position += 1;
+        if (position > 3) position = 0;
+        return position;
+    }
+
+    private static int moveCompassToTheLeft(int position) {
+        position -= 1;
+        if (position < 0) position = 3;
+        return position;
+    }
 
     /**
      * move the compass clockwise or anti-clockwise based on (G,D) instruction (left <-> right)
@@ -23,11 +33,11 @@ public class MowerGame implements Game<MowerGame> {
     @Override
     public MowerGame applyInstruction() {
         int position = compassIndex.get(mowerBaseCoordinate.getOrientation());
-        for (int i = 0; i < mowerBaseInstruction.length; i++) {
-            if (mowerBaseInstruction[i].equals("G")) {
+        for (int i = 0; i < mowerGameInstruction.length; i++) {
+            if (mowerGameInstruction[i].equals("G")) {
                 position = moveCompassToTheLeft(position);
             } else
-                if (mowerBaseInstruction[i].equals("D")) {
+                if (mowerGameInstruction[i].equals("D")) {
                     position = moveCompassToTheRight(position);
                 } else {moveMower(position);}
         }
@@ -44,18 +54,6 @@ public class MowerGame implements Game<MowerGame> {
     @Override
     public MowerBaseCoordinate getMowerBaseCoordinate() {
         return mowerBaseCoordinate;
-    }
-
-    private static int moveCompassToTheRight(int position) {
-        position += 1;
-        if (position > 3) position = 0;
-        return position;
-    }
-
-    private static int moveCompassToTheLeft(int position) {
-        position -= 1;
-        if (position < 0) position = 3;
-        return position;
     }
 
     /**
