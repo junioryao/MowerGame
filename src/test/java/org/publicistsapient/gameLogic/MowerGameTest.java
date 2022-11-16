@@ -1,6 +1,9 @@
 package org.publicistsapient.gameLogic;
 
 import org.junit.jupiter.api.Test;
+import org.publicistsapient.Game.GameSurface;
+import org.publicistsapient.Game.MowerBaseCoordinate;
+import org.publicistsapient.Game.MowerGame;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
@@ -8,17 +11,28 @@ class MowerGameTest {
 
     @Test
     void apply() {
-        MowerGame mowerGame = new MowerGame("N", new int[]{1, 2}, new String[]{"G", "A", "G", "A", "G", "A", "G", "A",
-            "A"}, new int[]{5, 5});
+        GameSurface gameSurface = new GameSurface(5, 5);
+        MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(1, 2, "N");
+        MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
+                                       .mowerBaseInstruction(new String[]{"G", "A", "G", "A", "G", "A", "G", "A", "A"})
+                                       .build();
         mowerGame.applyInstruction();
-        assertArrayEquals(mowerGame.getMowerBaseCoordinate(), new String[]{"1", "3", "N"});
+        assertArrayEquals(new String[]{mowerGame.getMowerBaseCoordinate().getX().toString(),
+            mowerGame.getMowerBaseCoordinate().getY().toString(),
+            mowerGame.getMowerBaseCoordinate().getOrientation()}, new String[]{"1", "3", "N"});
     }
 
     @Test
     void apply1() {
-        MowerGame mowerGame = new MowerGame("E", new int[]{3, 3}, new String[]{"A", "A", "D", "A", "A", "D", "A", "D",
-            "D", "A"}, new int[]{5, 5});
+
+        GameSurface gameSurface = new GameSurface(5, 5);
+        MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(3, 3, "E");
+        MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
+                                       .mowerBaseInstruction(new String[]{"A", "A", "D", "A", "A", "D", "A", "D", "D",
+                                           "A"}).build();
         mowerGame.applyInstruction();
-        assertArrayEquals(mowerGame.getMowerBaseCoordinate(), new String[]{"5", "1", "E"});
+        assertArrayEquals(new String[]{mowerGame.getMowerBaseCoordinate().getX().toString(),
+            mowerGame.getMowerBaseCoordinate().getY().toString(),
+            mowerGame.getMowerBaseCoordinate().getOrientation()}, new String[]{"5", "1", "E"});
     }
 }

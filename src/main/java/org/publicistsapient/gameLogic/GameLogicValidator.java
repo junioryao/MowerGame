@@ -1,5 +1,9 @@
 package org.publicistsapient.gameLogic;
 
+import org.publicistsapient.Game.Game;
+import org.publicistsapient.Game.GameSurface;
+import org.publicistsapient.Game.MowerBaseCoordinate;
+import org.publicistsapient.Game.MowerGame;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileProcessor.FileProcessor;
@@ -17,13 +21,9 @@ import static org.publicistsapient.constant.Constant.*;
  */
 public class GameLogicValidator {
     FileProcessor fileProcessor;
-    List<MowerGame> mowerGameList;
-
     private final static Logger LOGGER = Logger.getLogger(GameLogicValidator.class.getName());
-
     public GameLogicValidator(FileProcessor fileProcessor) {
         this.fileProcessor = fileProcessor;
-        this.mowerGameList = new ArrayList<>();
     }
 
     /**
@@ -32,14 +32,12 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote extract the data from file and build game object
      */
-    public void validateAndBuildGame() throws FileProcessorException, FileNotFoundException, GameValidatorException {
+    public List<Game> validateAndBuildGame() throws FileProcessorException, FileNotFoundException, GameValidatorException {
         int[] surface;
-        fileProcessor.buildGameProcess();
-        List<String> gameLogic = fileProcessor.getGameLogic();
+        List<String> gameLogic = fileProcessor.buildGameProcess();
         surface = getSurface(gameLogic);
         gameLogic.remove(0);
-        this.mowerGameList = buildGame(gameLogic, surface);
-        LOGGER.info("Mower game build successfully");
+        return buildGame(gameLogic, surface);
     }
 
     /**
@@ -49,16 +47,20 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote build game object
      */
-    private List<MowerGame> buildGame(List<String> gameLogic, int[] surface) throws GameValidatorException {
-        List<MowerGame> mowerGameList = new ArrayList<>();
+    private List<Game> buildGame(List<String> gameLogic, int[] surface) throws GameValidatorException {
+        List<Game> mowerGameList = new ArrayList<>();
         String[] mowerCoordinate;
         String[] mowerInstructions;
+        GameSurface gameSurface = new GameSurface(surface[0], surface[1]);
         for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
             mowerCoordinate = validateMowerCoordinate(gameLogic.get(i));
             mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
-            mowerGameList.add(new MowerGame(mowerCoordinate[2], new int[]{Integer.parseInt(mowerCoordinate[0]),
-                Integer.parseInt(mowerCoordinate[1])}, mowerInstructions, surface));
+            MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(Integer.parseInt(mowerCoordinate[0]), Integer.parseInt(mowerCoordinate[1]), mowerCoordinate[2]);
+            MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
+                                           .mowerBaseInstruction(mowerInstructions).build().applyInstruction();
+            mowerGameList.add(mowerGame);
         }
+        LOGGER.info("Mower game build successfully");
         return mowerGameList;
     }
 
@@ -109,7 +111,4 @@ public class GameLogicValidator {
         return new int[]{x, y};
     }
 
-    public List<MowerGame> getMowerGameList() {
-        return mowerGameList;
-    }
 }

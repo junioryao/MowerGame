@@ -1,13 +1,12 @@
 package org.publicistsapient;
 
+import org.publicistsapient.Game.Game;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileProcessor.FileProcessor;
 import org.publicistsapient.gameLogic.GameLogicValidator;
-import org.publicistsapient.gameLogic.MowerGame;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
@@ -18,19 +17,16 @@ import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
 public class Main {
     public static void main(String[] args) throws FileProcessorException, FileNotFoundException, GameValidatorException {
         String path = overrideDefaultGamePattern(args);
-        FileProcessor fileProcessor = new FileProcessor(path);
-        GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        gameLogicValidator.validateAndBuildGame();
-        List<MowerGame> mowerGameList = gameLogicValidator.getMowerGameList();
+        GameLogicValidator gameLogicValidator = new GameLogicValidator(new FileProcessor(path));
+        List<Game> mowerGameList = gameLogicValidator.validateAndBuildGame();
         mowerGameList.forEach(mowerGame -> {
-            mowerGame.applyInstruction();
-            System.out.println(Arrays.toString(mowerGame.getMowerBaseCoordinate()));
+            System.out.println(mowerGame.getMowerBaseCoordinate().toString());
         });
     }
 
     private static String overrideDefaultGamePattern(String[] args) {
         String path = GAME_INPUT_PATTERN_TXT;
-        if (args.length > 0 && (!args[0].isBlank() || args[0] != null)) {
+        if (args.length > 0) {
             path = args[0];
         }
         return path;

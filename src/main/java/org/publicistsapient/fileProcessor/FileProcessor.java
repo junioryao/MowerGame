@@ -17,7 +17,7 @@ import static org.publicistsapient.constant.Constant.*;
 public class FileProcessor {
 
     private String filePath;
-    private List<String> fileCollector;
+    List<String> fileCollector;
 
     private final static Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
 
@@ -29,10 +29,11 @@ public class FileProcessor {
     /**
      * get the game schema from the input file
      *
+     * @return
      * @throws FileProcessorException
      * @throws FileNotFoundException
      */
-    public void buildGameProcess() throws FileProcessorException, FileNotFoundException {
+    public List<String> buildGameProcess() throws FileProcessorException, FileNotFoundException {
         validateFilePath(filePath);
         File file = new File((filePath));
         validateFile(file);
@@ -44,6 +45,7 @@ public class FileProcessor {
         fileReader.close();
         validateInputFileConfiguration();
         LOGGER.info("Game file has been loaded successfully");
+        return fileCollector;
     }
 
     private void validateInputFileConfiguration() throws FileProcessorException {
@@ -60,9 +62,5 @@ public class FileProcessor {
         if (!file.exists()) {
             throw new FileProcessorException(CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH);
         }
-    }
-
-    public List<String> getGameLogic() {
-        return fileCollector;
     }
 }

@@ -22,13 +22,6 @@ class FileProcessingTest {
     }
 
     @Test
-    @DisplayName("get file with null path")
-    void getFileWithNullPath() {
-        FileProcessor fileProcessor = new FileProcessor(null);
-        NullPointerException nullPointerException = Assertions.assertThrows(NullPointerException.class, () -> fileProcessor.buildGameProcess());
-    }
-
-    @Test
     @DisplayName("get file with wrong input path")
     void getFileWithWrongPath() {
         FileProcessor fileProcessor = new FileProcessor("./test.txt");
@@ -40,8 +33,7 @@ class FileProcessingTest {
     @DisplayName("get file with the right input path")
     void getFileWithRightPath() throws FileProcessorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
-        fileProcessor.buildGameProcess();
-        Assertions.assertTrue(fileProcessor.getGameLogic().size() % 2 != 0);
+        Assertions.assertTrue(fileProcessor.buildGameProcess().size() % 2 != 0);
     }
 
     @Test

@@ -3,6 +3,7 @@ package org.publicistsapient.gameLogic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.publicistsapient.Game.Game;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileProcessor.FileProcessor;
@@ -20,8 +21,7 @@ class GameLogicValidatorTest {
     void validateAndBuildGame() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        gameLogicValidator.validateAndBuildGame();
-        List<MowerGame> mowerGameList = gameLogicValidator.getMowerGameList();
+        List<Game> mowerGameList = gameLogicValidator.validateAndBuildGame();
         Assertions.assertTrue(mowerGameList.size() == 2);
     }
 

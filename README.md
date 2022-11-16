@@ -20,7 +20,7 @@
 
 ### Requirement
 
-* JDK 11
+* JDK 17
 * Maven
 
 ***
@@ -102,7 +102,7 @@ Y is constant in space and x is either incremented or decremented.
 
 ## Program UML
 
-![img_2.png](img_2.png)
+![img_3.png](img_3.png)
 
 
 
