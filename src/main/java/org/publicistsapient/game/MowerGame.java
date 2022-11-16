@@ -1,17 +1,18 @@
-package org.publicistsapient.Game;
+package org.publicistsapient.game;
 
 import lombok.Builder;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import static org.publicistsapient.constant.Property.*;
 
 @Builder
 public class MowerGame implements Game<MowerGame> {
-    private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
-    public GameSurface gameSurface;
+    private GameSurface gameSurface;
     private MowerBaseCoordinate mowerBaseCoordinate;
-    private String[] mowerGameInstruction;
+    private List<String> mowerGameInstruction;
+    private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
 
     private static int moveCompassToTheRight(int position) {
         position += 1;
@@ -33,11 +34,11 @@ public class MowerGame implements Game<MowerGame> {
     @Override
     public MowerGame applyInstruction() {
         int position = compassIndex.get(mowerBaseCoordinate.getOrientation());
-        for (int i = 0; i < mowerGameInstruction.length; i++) {
-            if (mowerGameInstruction[i].equals("G")) {
+        for (String instruction : mowerGameInstruction) {
+            if (instruction.equals("G")) {
                 position = moveCompassToTheLeft(position);
             } else
-                if (mowerGameInstruction[i].equals("D")) {
+                if (instruction.equals("D")) {
                     position = moveCompassToTheRight(position);
                 } else {moveMower(position);}
         }
@@ -68,6 +69,10 @@ public class MowerGame implements Game<MowerGame> {
             case DOWN -> mowerBaseCoordinate.moveDown(this);
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
+    }
+
+    public GameSurface getGameSurface() {
+        return gameSurface;
     }
 
 }

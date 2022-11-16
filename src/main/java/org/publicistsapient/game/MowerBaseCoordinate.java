@@ -1,4 +1,4 @@
-package org.publicistsapient.Game;
+package org.publicistsapient.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,25 +16,25 @@ public class MowerBaseCoordinate {
     }
 
     public void moveUp(MowerGame mowerGame) {
-        if (getX() <= mowerGame.gameSurface.x() && getY() + 1 <= mowerGame.gameSurface.y()) {
+        if (getX() <= mowerGame.getGameSurface().x() && getY() + 1 <= mowerGame.getGameSurface().y()) {
             setY(getY() + 1);
         }
     }
 
     public void moveDown(MowerGame mowerGame) {
-        if (getX() <= mowerGame.gameSurface.x() && getY() - 1 <= mowerGame.gameSurface.y()) {
+        if (getX() <= mowerGame.getGameSurface().x() && getY() - 1 <= mowerGame.getGameSurface().y()) {
             setY(getY() - 1);
         }
     }
 
     public void moveLeft(MowerGame mowerGame) {
-        if (getX() - 1 <= mowerGame.gameSurface.x() && getY() <= mowerGame.gameSurface.y()) {
+        if (getX() - 1 <= mowerGame.getGameSurface().x() && getY() <= mowerGame.getGameSurface().y()) {
             setX(getX() - 1);
         }
     }
 
     public void moveRight(MowerGame mowerGame) {
-        if (getX() + 1 <= mowerGame.gameSurface.x() && getY() <= mowerGame.gameSurface.y()) {
+        if (getX() + 1 <= mowerGame.getGameSurface().x() && getY() <= mowerGame.getGameSurface().y()) {
             setX(getX() + 1);
         }
     }

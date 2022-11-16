@@ -1,10 +1,10 @@
 package org.publicistsapient;
 
-import org.publicistsapient.Game.Game;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
-import org.publicistsapient.fileProcessor.FileProcessor;
-import org.publicistsapient.gameLogic.GameLogicValidator;
+import org.publicistsapient.fileprocessor.FileProcessor;
+import org.publicistsapient.game.Game;
+import org.publicistsapient.gamelogic.GameLogicValidator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -18,10 +18,8 @@ public class Main {
     public static void main(String[] args) throws FileProcessorException, FileNotFoundException, GameValidatorException {
         String path = overrideDefaultGamePattern(args);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(new FileProcessor(path));
-        List<Game> mowerGameList = gameLogicValidator.validateAndBuildGame();
-        mowerGameList.forEach(mowerGame -> {
-            System.out.println(mowerGame.getMowerBaseCoordinate().toString());
-        });
+        List<? extends Game> mowerGameList = gameLogicValidator.execute();
+        mowerGameList.forEach(mowerGame -> System.out.println(mowerGame.getMowerBaseCoordinate().toString()));
     }
 
     private static String overrideDefaultGamePattern(String[] args) {

@@ -1,4 +1,4 @@
-package org.publicistsapient.Game;
+package org.publicistsapient.game;
 
 public record GameSurface(int x, int y) {
 }

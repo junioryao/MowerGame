@@ -1,4 +1,4 @@
-package org.publicistsapient.fileProcessor;
+package org.publicistsapient.fileprocessor;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

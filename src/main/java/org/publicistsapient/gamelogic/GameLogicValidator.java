@@ -1,12 +1,12 @@
-package org.publicistsapient.gameLogic;
+package org.publicistsapient.gamelogic;
 
-import org.publicistsapient.Game.Game;
-import org.publicistsapient.Game.GameSurface;
-import org.publicistsapient.Game.MowerBaseCoordinate;
-import org.publicistsapient.Game.MowerGame;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
-import org.publicistsapient.fileProcessor.FileProcessor;
+import org.publicistsapient.fileprocessor.FileProcessor;
+import org.publicistsapient.game.Game;
+import org.publicistsapient.game.GameSurface;
+import org.publicistsapient.game.MowerBaseCoordinate;
+import org.publicistsapient.game.MowerGame;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote extract the data from file and build game object
      */
-    public List<Game> validateAndBuildGame() throws FileProcessorException, FileNotFoundException, GameValidatorException {
+    public List<? extends Game> execute() throws FileProcessorException, FileNotFoundException, GameValidatorException {
         int[] surface;
         List<String> gameLogic = fileProcessor.buildGameProcess();
         surface = getSurface(gameLogic);
@@ -48,8 +48,8 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote build game object
      */
-    private List<Game> buildGame(List<String> gameLogic, int[] surface) throws GameValidatorException {
-        List<Game> mowerGameList = new ArrayList<>();
+    private List<? extends Game> buildGame(List<String> gameLogic, int[] surface) throws GameValidatorException {
+        List<MowerGame> mowerGameList = new ArrayList<>();
         String[] mowerCoordinate;
         String[] mowerInstructions;
         GameSurface gameSurface = new GameSurface(surface[0], surface[1]);
@@ -58,7 +58,7 @@ public class GameLogicValidator {
             mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
             MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(Integer.parseInt(mowerCoordinate[0]), Integer.parseInt(mowerCoordinate[1]), mowerCoordinate[2]);
             MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
-                                           .mowerGameInstruction(mowerInstructions).build().applyInstruction();
+                                           .mowerGameInstruction(List.of(mowerInstructions)).build().applyInstruction();
             mowerGameList.add(mowerGame);
         }
         LOGGER.info("Mower game build successfully");

@@ -1,12 +1,12 @@
-package org.publicistsapient.gameLogic;
+package org.publicistsapient.gamelogic;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.publicistsapient.Game.Game;
 import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
-import org.publicistsapient.fileProcessor.FileProcessor;
+import org.publicistsapient.fileprocessor.FileProcessor;
+import org.publicistsapient.game.Game;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -21,8 +21,8 @@ class GameLogicValidatorTest {
     void validateAndBuildGame() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        List<Game> mowerGameList = gameLogicValidator.validateAndBuildGame();
-        Assertions.assertTrue(mowerGameList.size() == 2);
+        List<? extends Game> mowerGameList = gameLogicValidator.execute();
+        Assertions.assertEquals(2, mowerGameList.size());
     }
 
     @Test
@@ -30,8 +30,8 @@ class GameLogicValidatorTest {
     void validateAndBuildWrongGameInstruction() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_WRONG_GAME_INSTRUCTION);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.validateAndBuildGame());
-        Assertions.assertEquals(gameValidatorException.getMessage(), INVALID_GAME_INSTRUCTION);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        Assertions.assertEquals(INVALID_GAME_INSTRUCTION, gameValidatorException.getMessage());
     }
 
     @Test
@@ -39,8 +39,8 @@ class GameLogicValidatorTest {
     void validateAndBuildWrongGameSurface() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_SURFACE);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.validateAndBuildGame());
-        Assertions.assertEquals(gameValidatorException.getMessage(), WRONG_GAME_SURFACE_DEFINITION);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        Assertions.assertEquals(WRONG_GAME_SURFACE_DEFINITION, gameValidatorException.getMessage());
     }
 
     @Test
@@ -48,8 +48,8 @@ class GameLogicValidatorTest {
     void validateAndBuildWrongGameCoordinate() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_BASE_COORDINATE);
         GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.validateAndBuildGame());
-        Assertions.assertEquals(gameValidatorException.getMessage(), MOWER_COORDINATE_CAN_NOT_GET_VALIDATED);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        Assertions.assertEquals(MOWER_COORDINATE_CAN_NOT_GET_VALIDATED, gameValidatorException.getMessage());
     }
 
 

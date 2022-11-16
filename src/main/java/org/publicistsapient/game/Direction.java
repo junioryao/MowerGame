@@ -1,4 +1,4 @@
-package org.publicistsapient.Game;
+package org.publicistsapient.game;
 
 public enum Direction {
     UP, LEFT, RIGHT, DOWN
