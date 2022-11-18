@@ -9,10 +9,10 @@ import static org.publicistsapient.constant.Property.*;
 
 @Builder
 public class MowerGame implements Game<MowerGame> {
+    private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
     private GameSurface gameSurface;
     private MowerCoordinate mowerCoordinate;
     private List<String> gameInstructions;
-    private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
 
     private static int moveCompassToTheRight(int position) {
         position += 1;

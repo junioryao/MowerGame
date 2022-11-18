@@ -32,7 +32,7 @@ public class FileProcessor {
      * @throws FileProcessorException
      * @throws FileNotFoundException
      */
-    public List<String> buildGameProcess() throws FileProcessorException, FileNotFoundException {
+    public List<String> buildGameProcess() throws FileNotFoundException {
         validateFilePath(filePath);
         File file = new File((filePath));
         validateFile(file);

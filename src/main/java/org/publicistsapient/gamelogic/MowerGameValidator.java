@@ -27,43 +27,6 @@ public class MowerGameValidator implements LogicValidator {
         this.fileProcessor = fileProcessor;
     }
 
-    /**
-     * @throws FileProcessorException
-     * @throws FileNotFoundException
-     * @throws GameValidatorException
-     * @implNote extract the data from file and build game object
-     */
-    @Override
-    public List<? extends Game> execute() throws FileProcessorException, FileNotFoundException, GameValidatorException {
-        int[] surface;
-        int surfaceCoordinate = 0;
-        List<String> gameLogic = fileProcessor.buildGameProcess();
-        surface = getSurface(gameLogic);
-        gameLogic.remove(surfaceCoordinate);
-        return buildGames(gameLogic, surface);
-    }
-
-    /**
-     * @param gameLogic
-     * @param surface
-     * @return
-     * @throws GameValidatorException
-     * @implNote build game object
-     */
-    private List<? extends Game> buildGames(List<String> gameLogic, int[] surface) throws GameValidatorException {
-        List<MowerGame> mowerGameList = new ArrayList<>();
-        GameSurface gameSurface = buildGameSurface(surface);
-        for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
-            String[] mowerCoordinate = validateMowerCoordinate(gameLogic.get(i));
-            String[] mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
-            MowerCoordinate coordinate = buildMowerCoordinate(mowerCoordinate);
-            MowerGame mowerGame = buildGame(gameSurface, mowerInstructions, coordinate);
-            mowerGameList.add(mowerGame);
-        }
-        LOGGER.info("Mower game build successfully");
-        return mowerGameList;
-    }
-
     private static GameSurface buildGameSurface(int[] surface) {
         return new GameSurface(surface[0], surface[1]);
     }
@@ -86,12 +49,49 @@ public class MowerGameValidator implements LogicValidator {
     }
 
     /**
+     * @throws FileProcessorException
+     * @throws FileNotFoundException
+     * @throws GameValidatorException
+     * @implNote extract the data from file and build game object
+     */
+    @Override
+    public List<? extends Game> execute() throws FileNotFoundException {
+        int[] surface;
+        int surfaceCoordinate = 0;
+        List<String> gameLogic = fileProcessor.buildGameProcess();
+        surface = getSurface(gameLogic);
+        gameLogic.remove(surfaceCoordinate);
+        return buildGames(gameLogic, surface);
+    }
+
+    /**
+     * @param gameLogic
+     * @param surface
+     * @return
+     * @throws GameValidatorException
+     * @implNote build game object
+     */
+    private List<? extends Game> buildGames(List<String> gameLogic, int[] surface) {
+        List<MowerGame> mowerGameList = new ArrayList<>();
+        GameSurface gameSurface = buildGameSurface(surface);
+        for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
+            String[] mowerCoordinate = validateMowerCoordinate(gameLogic.get(i));
+            String[] mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
+            MowerCoordinate coordinate = buildMowerCoordinate(mowerCoordinate);
+            MowerGame mowerGame = buildGame(gameSurface, mowerInstructions, coordinate);
+            mowerGameList.add(mowerGame);
+        }
+        LOGGER.info("Mower game build successfully");
+        return mowerGameList;
+    }
+
+    /**
      * @param s
      * @return
      * @throws GameValidatorException
      * @implNote validate correct game instruction sequence
      */
-    private String[] validateMowerInstruction(String s) throws GameValidatorException {
+    private String[] validateMowerInstruction(String s) {
         String[] instruction = s.toUpperCase().split("");
         for (String s1 : instruction) {
             if (!Pattern.matches("[^BCEFHIJKLMNOPQRSTUVWXYZ]", s1)) {
@@ -107,7 +107,7 @@ public class MowerGameValidator implements LogicValidator {
      * @throws GameValidatorException
      * @implNote validate correct initial mower position
      */
-    private String[] validateMowerCoordinate(String s) throws GameValidatorException {
+    private String[] validateMowerCoordinate(String s) {
         String[] coordinate = s.toUpperCase().split(" ");
         if (coordinate.length == 3) return coordinate;
         if (coordinate.length == 2) {
@@ -124,7 +124,7 @@ public class MowerGameValidator implements LogicValidator {
      * @throws GameValidatorException
      * @implNote validate correct surface definition
      */
-    private int[] getSurface(List<String> gameLogic) throws GameValidatorException {
+    private int[] getSurface(List<String> gameLogic) {
         int surfaceRow = 0;
         String[] surface = gameLogic.get(surfaceRow).split(" ");
         if (surface.length != 2) throw new GameValidatorException(WRONG_GAME_SURFACE_DEFINITION);
