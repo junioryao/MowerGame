@@ -1,7 +1,5 @@
 package org.publicistsapient;
 
-import org.publicistsapient.exception.FileProcessorException;
-import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileprocessor.FileProcessor;
 import org.publicistsapient.game.Game;
 import org.publicistsapient.gamelogic.LogicValidator;
@@ -16,11 +14,11 @@ import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
  * @author Junior Yao -> junioryao.jy@gmail.com
  */
 public class Main {
-    public static void main(String[] args) throws FileProcessorException, FileNotFoundException, GameValidatorException {
+    public static void main(String[] args) throws FileNotFoundException {
         String path = overrideDefaultGamePattern(args);
         LogicValidator mowerGameValidator = new MowerGameValidator(new FileProcessor(path));
-        List<? extends Game> mowerGameList = mowerGameValidator.execute();
-        mowerGameList.forEach(mowerGame -> System.out.println(mowerGame.getMowerCoordinate().toString()));
+        List<? extends Game> mowerGames = mowerGameValidator.execute();
+        mowerGames.forEach(mowerGame -> System.out.println(mowerGame.getMowerCoordinate().toString()));
     }
 
     private static String overrideDefaultGamePattern(String[] args) {
@@ -30,4 +28,5 @@ public class Main {
         }
         return path;
     }
+
 }

@@ -18,20 +18,12 @@ public class FileProcessor {
 
     private final static Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
     List<String> fileCollector;
-    private String filePath;
+    private final String filePath;
 
     public FileProcessor(String path) {
         this.filePath = path;
         this.fileCollector = new ArrayList<>();
     }
-
-    /**
-     * get the game schema from the input file
-     *
-     * @return
-     * @throws FileProcessorException
-     * @throws FileNotFoundException
-     */
     public List<String> buildGameProcess() throws FileNotFoundException {
         validateFilePath(filePath);
         File file = new File((filePath));
