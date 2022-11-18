@@ -10,8 +10,8 @@ import static org.publicistsapient.constant.Property.*;
 @Builder
 public class MowerGame implements Game<MowerGame> {
     private GameSurface gameSurface;
-    private MowerBaseCoordinate mowerBaseCoordinate;
-    private List<String> mowerGameInstruction;
+    private MowerCoordinate mowerCoordinate;
+    private List<String> gameInstructions;
     private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
 
     private static int moveCompassToTheRight(int position) {
@@ -32,15 +32,17 @@ public class MowerGame implements Game<MowerGame> {
      * @return
      */
     @Override
-    public MowerGame applyInstruction() {
-        int position = compassIndex.get(mowerBaseCoordinate.getOrientation());
-        for (String instruction : mowerGameInstruction) {
+    public MowerGame applyInstructions() {
+        int position = compassIndex.get(mowerCoordinate.getOrientation());
+        for (String instruction : gameInstructions) {
             if (instruction.equals("G")) {
                 position = moveCompassToTheLeft(position);
             } else
                 if (instruction.equals("D")) {
                     position = moveCompassToTheRight(position);
-                } else {moveMower(position);}
+                } else {
+                    moveMower(position);
+                }
         }
         LOGGER.info("Game instruction performed successfully");
         return this;
@@ -48,14 +50,10 @@ public class MowerGame implements Game<MowerGame> {
 
     private void moveMower(int position) {
         String orientationMoved = compass[position];
-        mowerBaseCoordinate.setOrientation(orientationMoved);
+        mowerCoordinate.setOrientation(orientationMoved);
         updateMowerCoordinate(compassMovingCoordinate.get(orientationMoved));
     }
 
-    @Override
-    public MowerBaseCoordinate getMowerBaseCoordinate() {
-        return mowerBaseCoordinate;
-    }
 
     /**
      * @param direction
@@ -63,12 +61,15 @@ public class MowerGame implements Game<MowerGame> {
      */
     private void updateMowerCoordinate(Direction direction) {
         switch (direction) {
-            case UP -> mowerBaseCoordinate.moveUp(this);
-            case RIGHT -> mowerBaseCoordinate.moveRight(this);
-            case LEFT -> mowerBaseCoordinate.moveLeft(this);
-            case DOWN -> mowerBaseCoordinate.moveDown(this);
-            default -> throw new IllegalStateException("Unexpected value: " + direction);
+            case UP -> mowerCoordinate.moveUp(this);
+            case RIGHT -> mowerCoordinate.moveRight(this);
+            case LEFT -> mowerCoordinate.moveLeft(this);
+            case DOWN -> mowerCoordinate.moveDown(this);
         }
+    }
+
+    public MowerCoordinate getMowerCoordinate() {
+        return mowerCoordinate;
     }
 
     public GameSurface getGameSurface() {

@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sapient" />
         <module name="tondeuse" />
+        <module name="MowerGame" />
       </profile>
     </annotationProcessing>
   </component>

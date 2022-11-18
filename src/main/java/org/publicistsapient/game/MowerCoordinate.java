@@ -1,11 +1,13 @@
 package org.publicistsapient.game;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @AllArgsConstructor
-public class MowerBaseCoordinate {
+public class MowerCoordinate {
     Integer x;
     Integer y;
     String orientation;

@@ -5,7 +5,7 @@ import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileprocessor.FileProcessor;
 import org.publicistsapient.game.Game;
 import org.publicistsapient.game.GameSurface;
-import org.publicistsapient.game.MowerBaseCoordinate;
+import org.publicistsapient.game.MowerCoordinate;
 import org.publicistsapient.game.MowerGame;
 
 import java.io.FileNotFoundException;
@@ -19,11 +19,11 @@ import static org.publicistsapient.constant.Constant.*;
 /**
  * @implSpec validate game input data and build object
  */
-public class GameLogicValidator {
-    private final static Logger LOGGER = Logger.getLogger(GameLogicValidator.class.getName());
+public class MowerGameValidator implements LogicValidator {
+    private final static Logger LOGGER = Logger.getLogger(MowerGameValidator.class.getName());
     FileProcessor fileProcessor;
 
-    public GameLogicValidator(FileProcessor fileProcessor) {
+    public MowerGameValidator(FileProcessor fileProcessor) {
         this.fileProcessor = fileProcessor;
     }
 
@@ -33,12 +33,14 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote extract the data from file and build game object
      */
+    @Override
     public List<? extends Game> execute() throws FileProcessorException, FileNotFoundException, GameValidatorException {
         int[] surface;
+        int surfaceCoordinate = 0;
         List<String> gameLogic = fileProcessor.buildGameProcess();
         surface = getSurface(gameLogic);
-        gameLogic.remove(0);
-        return buildGame(gameLogic, surface);
+        gameLogic.remove(surfaceCoordinate);
+        return buildGames(gameLogic, surface);
     }
 
     /**
@@ -48,21 +50,39 @@ public class GameLogicValidator {
      * @throws GameValidatorException
      * @implNote build game object
      */
-    private List<? extends Game> buildGame(List<String> gameLogic, int[] surface) throws GameValidatorException {
+    private List<? extends Game> buildGames(List<String> gameLogic, int[] surface) throws GameValidatorException {
         List<MowerGame> mowerGameList = new ArrayList<>();
-        String[] mowerCoordinate;
-        String[] mowerInstructions;
-        GameSurface gameSurface = new GameSurface(surface[0], surface[1]);
+        GameSurface gameSurface = buildGameSurface(surface);
         for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
-            mowerCoordinate = validateMowerCoordinate(gameLogic.get(i));
-            mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
-            MowerBaseCoordinate mowerBaseCoordinate = new MowerBaseCoordinate(Integer.parseInt(mowerCoordinate[0]), Integer.parseInt(mowerCoordinate[1]), mowerCoordinate[2]);
-            MowerGame mowerGame = MowerGame.builder().gameSurface(gameSurface).mowerBaseCoordinate(mowerBaseCoordinate)
-                                           .mowerGameInstruction(List.of(mowerInstructions)).build().applyInstruction();
+            String[] mowerCoordinate = validateMowerCoordinate(gameLogic.get(i));
+            String[] mowerInstructions = validateMowerInstruction(gameLogic.get(i + 1));
+            MowerCoordinate coordinate = buildMowerCoordinate(mowerCoordinate);
+            MowerGame mowerGame = buildGame(gameSurface, mowerInstructions, coordinate);
             mowerGameList.add(mowerGame);
         }
         LOGGER.info("Mower game build successfully");
         return mowerGameList;
+    }
+
+    private static GameSurface buildGameSurface(int[] surface) {
+        return new GameSurface(surface[0], surface[1]);
+    }
+
+    private static MowerCoordinate buildMowerCoordinate(String[] mowerCoordinate) {
+        return MowerCoordinate.builder()
+                              .x(Integer.parseInt(mowerCoordinate[0]))
+                              .y(Integer.parseInt(mowerCoordinate[1]))
+                              .orientation(mowerCoordinate[2])
+                              .build();
+    }
+
+    private static MowerGame buildGame(GameSurface gameSurface, String[] mowerInstructions, MowerCoordinate mowerCoordinate) {
+        return MowerGame.builder()
+                        .gameSurface(gameSurface)
+                        .mowerCoordinate(mowerCoordinate)
+                        .gameInstructions(List.of(mowerInstructions))
+                        .build()
+                        .applyInstructions();
     }
 
     /**
@@ -78,7 +98,7 @@ public class GameLogicValidator {
                 throw new GameValidatorException(INVALID_GAME_INSTRUCTION);
             }
         }
-        return s.toUpperCase().split("");
+        return instruction;
     }
 
     /**
@@ -105,7 +125,8 @@ public class GameLogicValidator {
      * @implNote validate correct surface definition
      */
     private int[] getSurface(List<String> gameLogic) throws GameValidatorException {
-        String[] surface = gameLogic.get(0).split(" ");
+        int surfaceRow = 0;
+        String[] surface = gameLogic.get(surfaceRow).split(" ");
         if (surface.length != 2) throw new GameValidatorException(WRONG_GAME_SURFACE_DEFINITION);
         int x = Integer.parseInt(surface[0]);
         int y = Integer.parseInt(surface[1]);

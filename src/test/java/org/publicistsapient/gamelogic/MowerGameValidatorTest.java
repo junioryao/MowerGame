@@ -14,14 +14,14 @@ import java.util.List;
 import static org.publicistsapient.constant.Constant.*;
 import static org.publicistsapient.constant.Property.*;
 
-class GameLogicValidatorTest {
+class MowerGameValidatorTest {
 
     @Test
     @DisplayName("test correct game input")
     void validateAndBuildGame() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
-        GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        List<? extends Game> mowerGameList = gameLogicValidator.execute();
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        List<? extends Game> mowerGameList = mowerGameValidator.execute();
         Assertions.assertEquals(2, mowerGameList.size());
     }
 
@@ -29,8 +29,8 @@ class GameLogicValidatorTest {
     @DisplayName("test with wrong game instruction")
     void validateAndBuildWrongGameInstruction() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_WRONG_GAME_INSTRUCTION);
-        GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> mowerGameValidator.execute());
         Assertions.assertEquals(INVALID_GAME_INSTRUCTION, gameValidatorException.getMessage());
     }
 
@@ -38,8 +38,8 @@ class GameLogicValidatorTest {
     @DisplayName("test with wrong game surface")
     void validateAndBuildWrongGameSurface() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_SURFACE);
-        GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> mowerGameValidator.execute());
         Assertions.assertEquals(WRONG_GAME_SURFACE_DEFINITION, gameValidatorException.getMessage());
     }
 
@@ -47,8 +47,8 @@ class GameLogicValidatorTest {
     @DisplayName("test with wrong game base coordinate")
     void validateAndBuildWrongGameCoordinate() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_BASE_COORDINATE);
-        GameLogicValidator gameLogicValidator = new GameLogicValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> gameLogicValidator.execute());
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, () -> mowerGameValidator.execute());
         Assertions.assertEquals(MOWER_COORDINATE_CAN_NOT_GET_VALIDATED, gameValidatorException.getMessage());
     }
 

@@ -1,8 +1,8 @@
 package org.publicistsapient.game;
 
 public interface Game<T> {
-    T applyInstruction();
+    T applyInstructions();
 
-    MowerBaseCoordinate getMowerBaseCoordinate();
+    MowerCoordinate getMowerCoordinate();
 
 }
