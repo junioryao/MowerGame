@@ -2,8 +2,8 @@ package org.publicistsapient;
 
 import org.publicistsapient.fileprocessor.FileProcessor;
 import org.publicistsapient.game.Game;
-import org.publicistsapient.game.MowerCoordinate;
 import org.publicistsapient.game.MowerGame;
+import org.publicistsapient.game.MowerPosition;
 import org.publicistsapient.gamelogic.MowerGameValidator;
 import org.publicistsapient.gamelogic.Validator;
 
@@ -20,7 +20,7 @@ public class Main {
         String path = overrideDefaultGamePattern(args);
         Validator<MowerGame> mowerGameValidator = new MowerGameValidator(new FileProcessor(path));
         List<MowerGame> mowerGames = mowerGameValidator.execute();
-        mowerGames.stream().map(Game::getMowerCoordinate).map(MowerCoordinate::toString).forEach(System.out::println);
+        mowerGames.stream().map(Game::getMowerPosition).map(MowerPosition::toString).forEach(System.out::println);
     }
 
     private static String overrideDefaultGamePattern(String[] args) {

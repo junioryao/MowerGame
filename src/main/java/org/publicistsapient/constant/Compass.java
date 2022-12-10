@@ -9,14 +9,14 @@ public enum Compass {
         value = inputValue;
     }
 
-    public Integer getValue() {
-        return value;
-    }
-
     public static Compass getFromValue(int inputValue) {
         for (Compass compass : Compass.values()) {
             if (compass.getValue() == inputValue) return compass;
         }
         throw new IllegalArgumentException();
+    }
+
+    public Integer getValue() {
+        return value;
     }
 }

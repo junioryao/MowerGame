@@ -11,8 +11,13 @@ import org.publicistsapient.game.MowerGame;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static org.publicistsapient.constant.Constant.*;
-import static org.publicistsapient.constant.Property.*;
+import static org.publicistsapient.constant.Constant.INVALID_GAME_INSTRUCTION;
+import static org.publicistsapient.constant.Constant.MOWER_COORDINATE_CAN_NOT_GET_VALIDATED;
+import static org.publicistsapient.constant.Constant.WRONG_GAME_SURFACE_DEFINITION;
+import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
+import static org.publicistsapient.constant.Property.GAME_INPUT_WRONG_GAME_INSTRUCTION;
+import static org.publicistsapient.constant.Property.WRONG_GAME_BASE_COORDINATE;
+import static org.publicistsapient.constant.Property.WRONG_GAME_SURFACE;
 
 class MowerGameValidatorTest {
 
