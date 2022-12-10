@@ -1,8 +1,8 @@
 package org.publicistsapient.gamelogic;
 
+import org.publicistsapient.constant.Compass;
 import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileprocessor.FileProcessor;
-import org.publicistsapient.game.Game;
 import org.publicistsapient.game.GameSurface;
 import org.publicistsapient.game.MowerCoordinate;
 import org.publicistsapient.game.MowerGame;
@@ -14,12 +14,13 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import static org.publicistsapient.constant.Constant.*;
+import static org.publicistsapient.constant.Instruction.getInstructions;
 
 /**
  * @implSpec validate game input data and build object
  */
-public class MowerGameValidator implements LogicValidator {
-    private final static Logger LOGGER = Logger.getLogger(MowerGameValidator.class.getName());
+public class MowerGameValidator implements Validator<MowerGame> {
+    private static final Logger LOGGER = Logger.getLogger(MowerGameValidator.class.getName());
     FileProcessor fileProcessor;
 
     public MowerGameValidator(FileProcessor fileProcessor) {
@@ -34,7 +35,7 @@ public class MowerGameValidator implements LogicValidator {
         return MowerCoordinate.builder()
                               .x(Integer.parseInt(mowerCoordinate[0]))
                               .y(Integer.parseInt(mowerCoordinate[1]))
-                              .orientation(mowerCoordinate[2])
+                              .orientation(Compass.valueOf(mowerCoordinate[2]))
                               .build();
     }
 
@@ -42,14 +43,14 @@ public class MowerGameValidator implements LogicValidator {
         return MowerGame.builder()
                         .gameSurface(gameSurface)
                         .mowerCoordinate(mowerCoordinate)
-                        .gameInstructions(List.of(mowerInstructions))
+                        .gameInstructions(getInstructions(List.of(mowerInstructions)))
                         .build()
                         .applyInstructions();
     }
 
 
     @Override
-    public List<? extends Game> execute() throws FileNotFoundException {
+    public List<MowerGame> execute() throws FileNotFoundException {
         int surfaceCoordinate = 0;
         List<String> gameLogic = fileProcessor.buildGameProcess();
         int[] surface = getSurface(gameLogic);
@@ -57,7 +58,7 @@ public class MowerGameValidator implements LogicValidator {
         return buildGames(gameLogic, surface);
     }
 
-    private List<? extends Game> buildGames(List<String> gameLogic, int[] surface) {
+    private List<MowerGame> buildGames(List<String> gameLogic, int[] surface) {
         List<MowerGame> mowerGames = new ArrayList<>();
         GameSurface gameSurface = buildGameSurface(surface);
         for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {

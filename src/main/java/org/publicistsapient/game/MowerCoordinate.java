@@ -3,6 +3,7 @@ package org.publicistsapient.game;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.publicistsapient.constant.Compass;
 
 @Data
 @Builder
@@ -10,12 +11,8 @@ import lombok.Data;
 public class MowerCoordinate {
     Integer x;
     Integer y;
-    String orientation;
+    Compass orientation;
 
-    @Override
-    public String toString() {
-        return "MowerBaseCoordinate{" + "x=" + x + ", y=" + y + ", orientation='" + orientation + '\'' + '}';
-    }
 
     public void moveUp(MowerGame mowerGame) {
         if (getX() <= mowerGame.getGameSurface().x() && getY() + 1 <= mowerGame.getGameSurface().y()) {

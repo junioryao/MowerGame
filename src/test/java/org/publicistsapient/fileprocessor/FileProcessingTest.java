@@ -1,12 +1,12 @@
 package org.publicistsapient.fileprocessor;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.publicistsapient.exception.FileProcessorException;
 
 import java.io.FileNotFoundException;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.publicistsapient.constant.Constant.*;
 import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_2_TXT;
 import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
@@ -17,31 +17,31 @@ class FileProcessingTest {
     @DisplayName("get File with empty path")
     void getFileWithEmptyPath() {
         FileProcessor fileProcessor = new FileProcessor("");
-        FileProcessorException fileProcessorException = Assertions.assertThrows(FileProcessorException.class, () -> fileProcessor.buildGameProcess());
-        Assertions.assertEquals(fileProcessorException.getMessage(), FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY);
+        FileProcessorException fileProcessorException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        assertEquals(FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY, fileProcessorException.getMessage());
     }
 
     @Test
     @DisplayName("get file with wrong input path")
     void getFileWithWrongPath() {
         FileProcessor fileProcessor = new FileProcessor("./test.txt");
-        FileProcessorException NotFoundException = Assertions.assertThrows(FileProcessorException.class, () -> fileProcessor.buildGameProcess());
-        Assertions.assertEquals(NotFoundException.getMessage(), CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH);
+        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        assertEquals(CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH, NotFoundException.getMessage());
     }
 
     @Test
     @DisplayName("get file with the right input path")
     void getFileWithRightPath() throws FileProcessorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
-        Assertions.assertTrue(fileProcessor.buildGameProcess().size() % 2 != 0);
+        assertNotEquals(0, fileProcessor.buildGameProcess().size() % 2);
     }
 
     @Test
     @DisplayName("get file with the right input path and wrong game configuration")
-    void getFileWithRightPathAndWrongGameConfiguration() throws FileProcessorException, FileNotFoundException {
+    void getFileWithRightPathAndWrongGameConfiguration() throws FileProcessorException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_2_TXT);
-        FileProcessorException NotFoundException = Assertions.assertThrows(FileProcessorException.class, () -> fileProcessor.buildGameProcess());
-        Assertions.assertEquals(NotFoundException.getMessage(), WRONG_INPUT_GAME_FILE_CONFIGURATION);
+        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        assertEquals(WRONG_INPUT_GAME_FILE_CONFIGURATION, NotFoundException.getMessage());
     }
 
 

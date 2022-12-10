@@ -16,14 +16,15 @@ import static org.publicistsapient.constant.Constant.*;
  */
 public class FileProcessor {
 
-    private final static Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
-    List<String> fileCollector;
+    private static final Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
     private final String filePath;
+    List<String> fileCollector;
 
     public FileProcessor(String path) {
         this.filePath = path;
         this.fileCollector = new ArrayList<>();
     }
+
     public List<String> buildGameProcess() throws FileNotFoundException {
         validateFilePath(filePath);
         File file = new File((filePath));

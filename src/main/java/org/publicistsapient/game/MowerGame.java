@@ -1,18 +1,21 @@
 package org.publicistsapient.game;
 
 import lombok.Builder;
+import org.publicistsapient.constant.Compass;
+import org.publicistsapient.constant.Instruction;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.publicistsapient.constant.Property.*;
+import static org.publicistsapient.constant.Instruction.D;
+import static org.publicistsapient.constant.Instruction.G;
 
 @Builder
 public class MowerGame implements Game<MowerGame> {
-    private final static Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MowerGame.class.getName());
     private GameSurface gameSurface;
+    private List<Instruction> gameInstructions;
     private MowerCoordinate mowerCoordinate;
-    private List<String> gameInstructions;
 
     private static int moveCompassToTheRight(int position) {
         position += 1;
@@ -29,16 +32,15 @@ public class MowerGame implements Game<MowerGame> {
     /**
      * move the compass clockwise or anti-clockwise based on (G,D) instruction (left <-> right)
      *
-     * @return
      */
     @Override
     public MowerGame applyInstructions() {
-        int position = compassIndex.get(mowerCoordinate.getOrientation());
-        for (String instruction : gameInstructions) {
-            if (instruction.equals("G")) {
+        int position = mowerCoordinate.getOrientation().getValue();
+        for (Instruction instruction : gameInstructions) {
+            if (G.equals(instruction)) {
                 position = moveCompassToTheLeft(position);
             } else
-                if (instruction.equals("D")) {
+                if (D.equals(instruction)) {
                     position = moveCompassToTheRight(position);
                 } else {
                     moveMower(position);
@@ -49,22 +51,17 @@ public class MowerGame implements Game<MowerGame> {
     }
 
     private void moveMower(int position) {
-        String orientationMoved = compass[position];
-        mowerCoordinate.setOrientation(orientationMoved);
-        updateMowerCoordinate(compassMovingCoordinate.get(orientationMoved));
+        Compass compassOrientation = Compass.getFromValue(position);
+        mowerCoordinate.setOrientation(compassOrientation);
+        updateMowerCoordinate(compassOrientation);
     }
 
-
-    /**
-     * @param direction
-     * @implNote perform mower movement based on compass orientation
-     */
-    private void updateMowerCoordinate(Direction direction) {
-        switch (direction) {
-            case UP -> mowerCoordinate.moveUp(this);
-            case RIGHT -> mowerCoordinate.moveRight(this);
-            case LEFT -> mowerCoordinate.moveLeft(this);
-            case DOWN -> mowerCoordinate.moveDown(this);
+    private void updateMowerCoordinate(Compass compassOrientation) {
+        switch (compassOrientation) {
+            case N -> mowerCoordinate.moveUp(this);
+            case E -> mowerCoordinate.moveRight(this);
+            case W -> mowerCoordinate.moveLeft(this);
+            case S -> mowerCoordinate.moveDown(this);
         }
     }
 

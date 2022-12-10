@@ -7,6 +7,7 @@ public class Constant {
     public static final String INVALID_GAME_INSTRUCTION = "Invalid game instruction";
     public static final String MOWER_COORDINATE_CAN_NOT_GET_VALIDATED = "Mower coordinate can not get validated";
     public static final String WRONG_GAME_SURFACE_DEFINITION = "Wrong game surface definition";
+
     private Constant() {
     }
 }

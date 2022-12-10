@@ -2,8 +2,10 @@ package org.publicistsapient;
 
 import org.publicistsapient.fileprocessor.FileProcessor;
 import org.publicistsapient.game.Game;
-import org.publicistsapient.gamelogic.LogicValidator;
+import org.publicistsapient.game.MowerCoordinate;
+import org.publicistsapient.game.MowerGame;
 import org.publicistsapient.gamelogic.MowerGameValidator;
+import org.publicistsapient.gamelogic.Validator;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -16,9 +18,9 @@ import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         String path = overrideDefaultGamePattern(args);
-        LogicValidator mowerGameValidator = new MowerGameValidator(new FileProcessor(path));
-        List<? extends Game> mowerGames = mowerGameValidator.execute();
-        mowerGames.forEach(mowerGame -> System.out.println(mowerGame.getMowerCoordinate().toString()));
+        Validator<MowerGame> mowerGameValidator = new MowerGameValidator(new FileProcessor(path));
+        List<MowerGame> mowerGames = mowerGameValidator.execute();
+        mowerGames.stream().map(Game::getMowerCoordinate).map(MowerCoordinate::toString).forEach(System.out::println);
     }
 
     private static String overrideDefaultGamePattern(String[] args) {
@@ -28,5 +30,4 @@ public class Main {
         }
         return path;
     }
-
 }
