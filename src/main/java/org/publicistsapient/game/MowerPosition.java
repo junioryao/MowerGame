@@ -29,25 +29,25 @@ public class MowerPosition {
     GameSurface gameSurface;
     Compass orientation;
 
-    public void moveUp() {
+    private void moveUp() {
         if (getX() <= gameSurface.x() && getY() + 1 <= gameSurface.y()) {
             setY(getY() + 1);
         }
     }
 
-    public void moveDown() {
+    private void moveDown() {
         if (getX() <= gameSurface.x() && getY() - 1 <= gameSurface.y()) {
             setY(getY() - 1);
         }
     }
 
-    public void moveLeft() {
+    private void moveLeft() {
         if (getX() - 1 <= gameSurface.x() && getY() <= gameSurface.y()) {
             setX(getX() - 1);
         }
     }
 
-    public void moveRight() {
+    private void moveRight() {
         if (getX() + 1 <= gameSurface.x() && getY() <= gameSurface.y()) {
             setX(getX() + 1);
         }
