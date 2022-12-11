@@ -1,7 +1,8 @@
 package org.publicistsapient.gamelogic;
 
-import org.publicistsapient.constant.Compass;
 import org.publicistsapient.fileprocessor.FileProcessor;
+import org.publicistsapient.game.Compass;
+import org.publicistsapient.game.GameSurface;
 import org.publicistsapient.game.MowerGame;
 import org.publicistsapient.game.MowerPosition;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.publicistsapient.constant.Instruction.getInstructions;
+import static org.publicistsapient.game.Instruction.getInstructions;
 
 /**
  * @implSpec validate game input data and build object

@@ -1,14 +1,15 @@
 package org.publicistsapient.gamelogic;
 
 import org.junit.jupiter.api.Test;
-import org.publicistsapient.constant.Compass;
+import org.publicistsapient.game.Compass;
+import org.publicistsapient.game.GameSurface;
 import org.publicistsapient.game.MowerGame;
 import org.publicistsapient.game.MowerPosition;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.publicistsapient.constant.Instruction.getInstructions;
+import static org.publicistsapient.game.Instruction.getInstructions;
 
 class MowerGameTest {
 

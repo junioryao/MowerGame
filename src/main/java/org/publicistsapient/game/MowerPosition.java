@@ -3,16 +3,14 @@ package org.publicistsapient.game;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.publicistsapient.constant.Compass;
-import org.publicistsapient.gamelogic.GameSurface;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.publicistsapient.constant.Compass.E;
-import static org.publicistsapient.constant.Compass.N;
-import static org.publicistsapient.constant.Compass.S;
-import static org.publicistsapient.constant.Compass.W;
+import static org.publicistsapient.game.Compass.E;
+import static org.publicistsapient.game.Compass.N;
+import static org.publicistsapient.game.Compass.S;
+import static org.publicistsapient.game.Compass.W;
 
 @Data
 @Builder
