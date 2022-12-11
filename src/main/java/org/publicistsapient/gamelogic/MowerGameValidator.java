@@ -17,7 +17,7 @@ import static org.publicistsapient.constant.Instruction.getInstructions;
  */
 public class MowerGameValidator implements Validator<MowerGame> {
     private static final Logger LOGGER = Logger.getLogger(MowerGameValidator.class.getName());
-    FileProcessor fileProcessor;
+    private final FileProcessor fileProcessor;
 
     public MowerGameValidator(FileProcessor fileProcessor) {
         this.fileProcessor = fileProcessor;

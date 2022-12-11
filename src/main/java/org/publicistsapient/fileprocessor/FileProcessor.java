@@ -20,7 +20,7 @@ public class FileProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(FileProcessor.class.getName());
     private final String filePath;
-    List<String> fileCollector;
+    private final List<String> fileCollector;
 
     public FileProcessor(String path) {
         this.filePath = path;

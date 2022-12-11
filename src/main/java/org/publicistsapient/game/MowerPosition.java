@@ -29,6 +29,11 @@ public class MowerPosition {
     GameSurface gameSurface;
     Compass orientation;
 
+    @Override
+    public String toString() {
+        return "MowerPosition {" + "x=" + x + ", y=" + y + ", orientation=" + orientation + '}';
+    }
+
     private void moveUp() {
         if (getX() <= gameSurface.x() && getY() + 1 <= gameSurface.y()) {
             setY(getY() + 1);
