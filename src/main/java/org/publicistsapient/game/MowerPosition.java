@@ -19,7 +19,8 @@ public class MowerPosition {
     private static Map<Compass, Consumer<MowerPosition>> executor;
 
     static {
-        executor = Map.of(S, MowerPosition::moveDown, N, MowerPosition::moveUp, W, MowerPosition::moveLeft, E, MowerPosition::moveRight);
+        executor = Map.of(S, MowerPosition::moveDown, N, MowerPosition::moveUp, W, MowerPosition::moveLeft, E,
+            MowerPosition::moveRight);
     }
 
     Integer x;

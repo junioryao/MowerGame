@@ -35,7 +35,8 @@ class MowerGameValidatorTest {
     void validateAndBuildWrongGameInstruction() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_WRONG_GAME_INSTRUCTION);
         MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, mowerGameValidator::execute);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
+            mowerGameValidator::execute);
         Assertions.assertEquals(INVALID_GAME_INSTRUCTION, gameValidatorException.getMessage());
     }
 
@@ -44,7 +45,8 @@ class MowerGameValidatorTest {
     void validateAndBuildWrongGameSurface() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_SURFACE);
         MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, mowerGameValidator::execute);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
+            mowerGameValidator::execute);
         Assertions.assertEquals(WRONG_GAME_SURFACE_DEFINITION, gameValidatorException.getMessage());
     }
 
@@ -53,7 +55,8 @@ class MowerGameValidatorTest {
     void validateAndBuildWrongGameCoordinate() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_BASE_COORDINATE);
         MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
-        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class, mowerGameValidator::execute);
+        GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
+            mowerGameValidator::execute);
         Assertions.assertEquals(MOWER_COORDINATE_CAN_NOT_GET_VALIDATED, gameValidatorException.getMessage());
     }
 

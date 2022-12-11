@@ -21,7 +21,8 @@ class FileProcessingTest {
     @DisplayName("get File with empty path")
     void getFileWithEmptyPath() {
         FileProcessor fileProcessor = new FileProcessor("");
-        FileProcessorException fileProcessorException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        FileProcessorException fileProcessorException = assertThrows(FileProcessorException.class,
+            fileProcessor::buildGameProcess);
         assertEquals(FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY, fileProcessorException.getMessage());
     }
 
@@ -29,7 +30,8 @@ class FileProcessingTest {
     @DisplayName("get file with wrong input path")
     void getFileWithWrongPath() {
         FileProcessor fileProcessor = new FileProcessor("./test.txt");
-        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class,
+            fileProcessor::buildGameProcess);
         assertEquals(CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH, NotFoundException.getMessage());
     }
 
@@ -44,7 +46,8 @@ class FileProcessingTest {
     @DisplayName("get file with the right input path and wrong game configuration")
     void getFileWithRightPathAndWrongGameConfiguration() throws FileProcessorException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_2_TXT);
-        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class, fileProcessor::buildGameProcess);
+        FileProcessorException NotFoundException = assertThrows(FileProcessorException.class,
+            fileProcessor::buildGameProcess);
         assertEquals(WRONG_INPUT_GAME_FILE_CONFIGURATION, NotFoundException.getMessage());
     }
 
