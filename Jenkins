@@ -1,0 +1,31 @@
+pipeline {
+    agent {
+        node {
+            label ''
+            }
+      }
+    stages {
+        stage('Clean') {
+            steps {
+                sh '''mvn clean'''
+            }
+        }
+        stage('Install') {
+            steps {
+                sh '''mvn install'''
+            }
+        }
+
+        stage('tests') {
+            steps {
+                sh '''mvn test'''
+            }
+        }
+
+        stage('Deliver') {
+            steps {
+                sh '''echo "doing delivery stuff.." '''
+            }
+        }
+    }
+}
