@@ -4,6 +4,9 @@ pipeline {
             label ''
             }
       }
+      triggers{
+        pollSCM '* * * * *'
+      }
     stages {
         stage('Clean') {
             steps {
