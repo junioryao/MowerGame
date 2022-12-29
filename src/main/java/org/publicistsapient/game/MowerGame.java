@@ -32,7 +32,8 @@ public class MowerGame implements Game<MowerGame> {
 
     private void moveMower(int position) {
         Compass compassOrientation = Compass.getFromValue(position);
-        mowerPosition.move(compassOrientation);
+        mowerPosition.setOrientation(compassOrientation);
+        mowerPosition.execute();
     }
 
     public MowerPosition getMowerPosition() {
