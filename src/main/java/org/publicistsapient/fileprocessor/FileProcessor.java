@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import static org.publicistsapient.constant.Constant.*;
+import static org.publicistsapient.constant.Constant.CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH;
+import static org.publicistsapient.constant.Constant.FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY;
+import static org.publicistsapient.constant.Constant.WRONG_INPUT_GAME_FILE_CONFIGURATION;
 
 /**
  * #FileProcessor handle the .txt data extraction
@@ -40,10 +42,6 @@ public class FileProcessor {
         return fileCollector;
     }
 
-    private void validateInputFileConfiguration() throws FileProcessorException {
-        if (fileCollector.size() % 2 == 0) throw new FileProcessorException(WRONG_INPUT_GAME_FILE_CONFIGURATION);
-    }
-
     private void validateFilePath(String filePath) throws FileProcessorException {
         if (filePath.isBlank()) {
             throw new FileProcessorException(FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY);
@@ -54,5 +52,9 @@ public class FileProcessor {
         if (!file.exists()) {
             throw new FileProcessorException(CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH);
         }
+    }
+
+    private void validateInputFileConfiguration() throws FileProcessorException {
+        if (fileCollector.size() % 2 == 0) throw new FileProcessorException(WRONG_INPUT_GAME_FILE_CONFIGURATION);
     }
 }

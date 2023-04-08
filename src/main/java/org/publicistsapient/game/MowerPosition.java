@@ -7,17 +7,15 @@ import lombok.Data;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.publicistsapient.game.Compass.*;
+import static org.publicistsapient.game.Compass.E;
+import static org.publicistsapient.game.Compass.N;
+import static org.publicistsapient.game.Compass.S;
+import static org.publicistsapient.game.Compass.W;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class MowerPosition implements Movement {
-    Integer x;
-    Integer y;
-    GameSurface gameSurface;
-    Compass orientation;
-
     private static Map<Compass, Consumer<MowerPosition>> executor;
 
     static {
@@ -25,9 +23,19 @@ public class MowerPosition implements Movement {
                 MowerPosition::moveRight);
     }
 
+    Integer x;
+    Integer y;
+    GameSurface gameSurface;
+    Compass orientation;
+
     @Override
     public String toString() {
         return "MowerPosition {" + "x=" + x + ", y=" + y + ", orientation=" + orientation + '}';
+    }
+
+    @Override
+    public void execute() {
+        executor.get(getOrientation()).accept(this);
     }
 
     private void moveUp() {
@@ -52,10 +60,5 @@ public class MowerPosition implements Movement {
         if (getX() + 1 <= gameSurface.x() && getY() <= gameSurface.y()) {
             setX(getX() + 1);
         }
-    }
-
-    @Override
-    public void execute() {
-        executor.get(getOrientation()).accept(this);
     }
 }

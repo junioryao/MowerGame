@@ -18,13 +18,13 @@ class MowerGameTest {
         GameSurface gameSurface = new GameSurface(5, 5);
         MowerPosition mowerPosition = new MowerPosition(1, 2, gameSurface, Compass.N);
         MowerGame mowerGame = MowerGame.builder()
-                                       .mowerPosition(mowerPosition)
-                                       .gameInstructions(getInstructions(List.of("G", "A", "G", "A", "G", "A", "G",
-                                           "A", "A")))
-                                       .build();
+                .mowerPosition(mowerPosition)
+                .gameInstructions(getInstructions(List.of("G", "A", "G", "A", "G", "A", "G",
+                        "A", "A")))
+                .build();
         mowerGame.applyInstructions();
         assertArrayEquals(new String[]{"1", "3", "N"}, new String[]{mowerGame.getMowerPosition().getX().toString(),
-            mowerGame.getMowerPosition().getY().toString(), mowerGame.getMowerPosition().getOrientation().toString()});
+                mowerGame.getMowerPosition().getY().toString(), mowerGame.getMowerPosition().getOrientation().toString()});
     }
 
     @Test
@@ -33,12 +33,12 @@ class MowerGameTest {
         GameSurface gameSurface = new GameSurface(5, 5);
         MowerPosition mowerPosition = new MowerPosition(3, 3, gameSurface, Compass.E);
         MowerGame mowerGame = MowerGame.builder()
-                                       .mowerPosition(mowerPosition)
-                                       .gameInstructions(getInstructions(List.of("A", "A", "D", "A", "A", "D", "A",
-                                           "D", "D", "A")))
-                                       .build();
+                .mowerPosition(mowerPosition)
+                .gameInstructions(getInstructions(List.of("A", "A", "D", "A", "A", "D", "A",
+                        "D", "D", "A")))
+                .build();
         mowerGame.applyInstructions();
         assertArrayEquals(new String[]{"5", "1", "E"}, new String[]{mowerGame.getMowerPosition().getX().toString(),
-            mowerGame.getMowerPosition().getY().toString(), mowerGame.getMowerPosition().getOrientation().toString()});
+                mowerGame.getMowerPosition().getY().toString(), mowerGame.getMowerPosition().getOrientation().toString()});
     }
 }

@@ -12,6 +12,21 @@ public class MowerGameBuilder implements Builder<MowerGame, String, Integer> {
     private static final Logger LOGGER = Logger.getLogger(MowerGameBuilder.class.getName());
     private final MowerValidator validator = MowerValidator.Instance();
 
+    @Override
+    public List<MowerGame> buildGames(List<String> gameLogic, Integer[] surface) {
+        List<MowerGame> mowerGames = new ArrayList<>();
+        GameSurface gameSurface = buildGameSurface(surface);
+        for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
+            String[] mowerCoordinate = validator.getMowerCoordinate(gameLogic.get(i));
+            String[] mowerInstructions = validator.getMowerInstructions(gameLogic.get(i + 1));
+            MowerPosition coordinate = buildMowerCoordinate(mowerCoordinate, gameSurface);
+            MowerGame mowerGame = buildGame(mowerInstructions, coordinate);
+            mowerGames.add(mowerGame);
+        }
+        LOGGER.info("Mower game built successfully");
+        return mowerGames;
+    }
+
     private GameSurface buildGameSurface(Integer[] surface) {
         return new GameSurface(surface[0], surface[1]);
     }
@@ -31,20 +46,5 @@ public class MowerGameBuilder implements Builder<MowerGame, String, Integer> {
                 .gameInstructions(getInstructions(List.of(mowerInstructions)))
                 .build()
                 .applyInstructions();
-    }
-
-    @Override
-    public List<MowerGame> buildGames(List<String> gameLogic, Integer[] surface) {
-        List<MowerGame> mowerGames = new ArrayList<>();
-        GameSurface gameSurface = buildGameSurface(surface);
-        for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
-            String[] mowerCoordinate = validator.getMowerCoordinate(gameLogic.get(i));
-            String[] mowerInstructions = validator.getMowerInstructions(gameLogic.get(i + 1));
-            MowerPosition coordinate = buildMowerCoordinate(mowerCoordinate, gameSurface);
-            MowerGame mowerGame = buildGame(mowerInstructions, coordinate);
-            mowerGames.add(mowerGame);
-        }
-        LOGGER.info("Mower game built successfully");
-        return mowerGames;
     }
 }
