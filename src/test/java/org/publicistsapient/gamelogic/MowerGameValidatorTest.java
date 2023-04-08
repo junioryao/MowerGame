@@ -7,17 +7,13 @@ import org.publicistsapient.exception.FileProcessorException;
 import org.publicistsapient.exception.GameValidatorException;
 import org.publicistsapient.fileprocessor.FileProcessor;
 import org.publicistsapient.game.MowerGame;
+import org.publicistsapient.game.MowerGameBuilder;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static org.publicistsapient.constant.Constant.INVALID_GAME_INSTRUCTION;
-import static org.publicistsapient.constant.Constant.MOWER_COORDINATE_CAN_NOT_GET_VALIDATED;
-import static org.publicistsapient.constant.Constant.WRONG_GAME_SURFACE_DEFINITION;
-import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
-import static org.publicistsapient.constant.Property.GAME_INPUT_WRONG_GAME_INSTRUCTION;
-import static org.publicistsapient.constant.Property.WRONG_GAME_BASE_COORDINATE;
-import static org.publicistsapient.constant.Property.WRONG_GAME_SURFACE;
+import static org.publicistsapient.constant.Constant.*;
+import static org.publicistsapient.constant.Property.*;
 
 class MowerGameValidatorTest {
 
@@ -25,7 +21,7 @@ class MowerGameValidatorTest {
     @DisplayName("test correct game input")
     void validateAndBuildGame() throws FileProcessorException, GameValidatorException, FileNotFoundException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_PATTERN_TXT);
-        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor, new MowerGameBuilder());
         List<MowerGame> mowerGameList = mowerGameValidator.execute();
         Assertions.assertEquals(2, mowerGameList.size());
     }
@@ -34,9 +30,9 @@ class MowerGameValidatorTest {
     @DisplayName("test with wrong game instruction")
     void validateAndBuildWrongGameInstruction() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(GAME_INPUT_WRONG_GAME_INSTRUCTION);
-        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor, new MowerGameBuilder());
         GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
-            mowerGameValidator::execute);
+                mowerGameValidator::execute);
         Assertions.assertEquals(INVALID_GAME_INSTRUCTION, gameValidatorException.getMessage());
     }
 
@@ -44,9 +40,9 @@ class MowerGameValidatorTest {
     @DisplayName("test with wrong game surface")
     void validateAndBuildWrongGameSurface() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_SURFACE);
-        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor, new MowerGameBuilder());
         GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
-            mowerGameValidator::execute);
+                mowerGameValidator::execute);
         Assertions.assertEquals(WRONG_GAME_SURFACE_DEFINITION, gameValidatorException.getMessage());
     }
 
@@ -54,9 +50,9 @@ class MowerGameValidatorTest {
     @DisplayName("test with wrong game base coordinate")
     void validateAndBuildWrongGameCoordinate() throws FileProcessorException, GameValidatorException {
         FileProcessor fileProcessor = new FileProcessor(WRONG_GAME_BASE_COORDINATE);
-        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor);
+        MowerGameValidator mowerGameValidator = new MowerGameValidator(fileProcessor, new MowerGameBuilder());
         GameValidatorException gameValidatorException = Assertions.assertThrows(GameValidatorException.class,
-            mowerGameValidator::execute);
+                mowerGameValidator::execute);
         Assertions.assertEquals(MOWER_COORDINATE_CAN_NOT_GET_VALIDATED, gameValidatorException.getMessage());
     }
 

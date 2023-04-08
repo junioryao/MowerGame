@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import static org.publicistsapient.constant.Constant.CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH;
-import static org.publicistsapient.constant.Constant.FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY;
-import static org.publicistsapient.constant.Constant.WRONG_INPUT_GAME_FILE_CONFIGURATION;
+import static org.publicistsapient.constant.Constant.*;
 
 /**
  * #FileProcessor handle the .txt data extraction

@@ -5,12 +5,20 @@ import org.publicistsapient.exception.GameValidatorException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static org.publicistsapient.constant.Constant.INVALID_GAME_INSTRUCTION;
-import static org.publicistsapient.constant.Constant.MOWER_COORDINATE_CAN_NOT_GET_VALIDATED;
-import static org.publicistsapient.constant.Constant.WRONG_GAME_SURFACE_DEFINITION;
+import static org.publicistsapient.constant.Constant.*;
 
-class ValidatorUtils {
-    public static String[] getMowerCoordinate(String s) {
+public final class MowerValidator {
+
+    private static volatile MowerValidator INSTANCE = new MowerValidator();
+
+    private MowerValidator() {
+    }
+
+    synchronized public static MowerValidator Instance() {
+        return INSTANCE;
+    }
+
+    public String[] getMowerCoordinate(String s) {
         String[] coordinate = s.toUpperCase().split(" ");
         if (coordinate.length == 3) return coordinate;
         if (coordinate.length == 2) {
@@ -21,7 +29,7 @@ class ValidatorUtils {
         throw new GameValidatorException(MOWER_COORDINATE_CAN_NOT_GET_VALIDATED);
     }
 
-    public static String[] getMowerInstructions(String s) {
+    public String[] getMowerInstructions(String s) {
         String[] instruction = s.toUpperCase().split("");
         for (String s1 : instruction) {
             if (!Pattern.matches("[^BCEFHIJKLMNOPQRSTUVWXYZ]", s1)) {
@@ -31,7 +39,7 @@ class ValidatorUtils {
         return instruction;
     }
 
-    public static int[] getSurface(List<String> gameLogic) {
+    public int[] getSurface(List<String> gameLogic) {
         int surfaceRow = 0;
         String[] surface = gameLogic.get(surfaceRow).split(" ");
         if (surface.length != 2) throw new GameValidatorException(WRONG_GAME_SURFACE_DEFINITION);

@@ -6,12 +6,8 @@ import org.publicistsapient.exception.FileProcessorException;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.publicistsapient.constant.Constant.CAN_NOT_FIND_THE_FILE_FROM_THE_GIVEN_PATH;
-import static org.publicistsapient.constant.Constant.FILE_PATH_SHOULD_NOT_BE_NULL_OR_EMPTY;
-import static org.publicistsapient.constant.Constant.WRONG_INPUT_GAME_FILE_CONFIGURATION;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.publicistsapient.constant.Constant.*;
 import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_2_TXT;
 import static org.publicistsapient.constant.Property.GAME_INPUT_PATTERN_TXT;
 
