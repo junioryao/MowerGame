@@ -39,12 +39,12 @@ public final class MowerValidator {
         return instruction;
     }
 
-    public int[] getSurface(List<String> gameLogic) {
+    public Integer[] getSurface(List<String> gameLogic) {
         int surfaceRow = 0;
         String[] surface = gameLogic.get(surfaceRow).split(" ");
         if (surface.length != 2) throw new GameValidatorException(WRONG_GAME_SURFACE_DEFINITION);
         int x = Integer.parseInt(surface[0]);
         int y = Integer.parseInt(surface[1]);
-        return new int[]{x, y};
+        return new Integer[]{x, y};
     }
 }

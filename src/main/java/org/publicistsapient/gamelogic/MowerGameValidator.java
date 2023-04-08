@@ -26,7 +26,7 @@ public class MowerGameValidator implements Validator<MowerGame> {
     public List<MowerGame> execute() throws FileNotFoundException {
         int surfaceCoordinate = 0;
         List<String> gameLogic = fileProcessor.buildGameProcess();
-        int[] surface = validator.getSurface(gameLogic);
+        Integer[] surface = validator.getSurface(gameLogic);
         gameLogic.remove(surfaceCoordinate);
         return builder.buildGames(gameLogic, surface);
     }

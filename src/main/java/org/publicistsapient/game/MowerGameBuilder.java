@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 
 import static org.publicistsapient.game.Instruction.getInstructions;
 
-public class MowerGameBuilder implements Builder<MowerGame> {
+public class MowerGameBuilder implements Builder<MowerGame, String, Integer> {
     private static final Logger LOGGER = Logger.getLogger(MowerGameBuilder.class.getName());
     private final MowerValidator validator = MowerValidator.Instance();
 
-    private GameSurface buildGameSurface(int[] surface) {
+    private GameSurface buildGameSurface(Integer[] surface) {
         return new GameSurface(surface[0], surface[1]);
     }
 
@@ -34,7 +34,7 @@ public class MowerGameBuilder implements Builder<MowerGame> {
     }
 
     @Override
-    public List<MowerGame> buildGames(List<String> gameLogic, int[] surface) {
+    public List<MowerGame> buildGames(List<String> gameLogic, Integer[] surface) {
         List<MowerGame> mowerGames = new ArrayList<>();
         GameSurface gameSurface = buildGameSurface(surface);
         for (int i = 0; i < gameLogic.size() - 1; i = i + 2) {
